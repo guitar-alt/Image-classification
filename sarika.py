@@ -12,10 +12,15 @@ st.write("Upload an image to see if it’s AI-generated or real (placeholder dem
 # -------------------------------
 @st.cache_resource
 def load_model():
+   @st.cache_resource
+def load_model():
+    import timm
+    import torch
     model = timm.create_model("resnet18", pretrained=True)
-    model.fc = torch.nn.Linear(model.fc.in_features, 2)  # 2 output classes: Real / AI
+    model.fc = torch.nn.Linear(model.fc.in_features, 2)  # 2 classes
     model.eval()
     return model
+
 
 model = load_model()
 
@@ -59,3 +64,4 @@ if uploaded_file:
         st.error("🚨 This image is likely AI-generated!")
     else:
         st.success("✅ This image looks real!")
+
