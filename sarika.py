@@ -12,10 +12,9 @@ st.write("Upload an image to detect if it’s AI-generated or real.")
 def load_model():
     model = timm.create_model("resnet18", pretrained=True)
     model.fc = torch.nn.Linear(model.fc.in_features, 2)
-    model.load_state_dict(torch.hub.load_state_dict_from_url(
-        'https://huggingface.co/datasets/microsoft/resnet18-fake-image-detection/resolve/main/model.pth',
-        map_location="cpu"
-    ))
+    model = timm.create_model("resnet18", pretrained=True)
+
+
     model.eval()
     return model
 
@@ -53,3 +52,4 @@ if uploaded_file:
         st.error("🚨 This image is likely AI-generated!")
     else:
         st.success("✅ This image looks real!")
+
